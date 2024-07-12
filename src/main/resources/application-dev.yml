@@ -1,0 +1,53 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/QRMenu
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: 06.ankara.06
+  jpa:
+    open-in-view: false
+    #    properties:
+    #      hibernate:
+    #        format_sql: true
+    hibernate:
+      ddl-auto: update
+    #    show-sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: vayvayvay.060@gmail.com
+    password: zfumdhlxtlbgpcjm
+    properties:
+      mail:
+        transport:
+          protocol: smtp
+        smtp:
+        auth : true
+        starttls:
+          enabled : true
+          required : true
+        connectiontimeout: 5000
+        timeout: 3000
+        writetimeout: 5000
+  graphql:
+    cors:
+      allowed-origins: http://localhost:8088
+      allowed-headers: Origin, Content-Type, Accept
+      allowed-methods: "*"
+      allow-credentials: true
+application:
+  security:
+    jwt:
+      secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+      expiration: 86400000
+      refresh-token:
+        expiration: 604800000
+  mailing:
+    frontend:
+      activation-url: http://localhost:4200/activate-account
+server:
+  port: 8088
+  upload:
+    directory: C:/Users/Dilara/Desktop/menuImages

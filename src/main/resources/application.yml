@@ -1,0 +1,16 @@
+spring:
+  profiles:
+    active: dev
+  servlet:
+    multipart:
+      max-file-size: 50MB
+#  thymeleaf:
+#    enabled: false
+#    prefix: classpath:src/main/resources/templates/activate_account.html
+
+springdoc:
+  default-produces-media-type: application/json
+
+server:
+  servlet:
+    context-path: /api/v1/
