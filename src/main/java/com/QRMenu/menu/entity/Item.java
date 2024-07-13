@@ -5,6 +5,7 @@ import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -19,5 +20,6 @@ public class Item {
     Integer price;
     String imageUrl;
     @CreatedDate
-    LocalDate createdAt;
+    LocalDateTime createdAt;
+    LocalDateTime updatedAt;
 }

@@ -1,8 +1,18 @@
 package com.QRMenu.menu.service;
 
+import com.QRMenu.menu.dto.CategoryDto;
+import com.QRMenu.menu.dto.ItemDto;
 import com.QRMenu.menu.entity.Item;
+
+import java.util.List;
 
 public interface ItemService {
 
-    void saveItem(Item item);
+    ItemDto saveItem(Item item);
+
+    void deleteItem(Integer id);
+
+    ItemDto editItem(Integer id, Item item);
+
+    List<ItemDto> getAll();
 }
