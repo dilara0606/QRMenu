@@ -11,8 +11,6 @@ import com.QRMenu.menu.mapper.ItemMapper;
 import com.QRMenu.menu.repository.CategoryRepository;
 import com.QRMenu.menu.repository.CategorysItemRepository;
 import com.QRMenu.menu.repository.ItemRepository;
-import com.QRMenu.menu.repository.UserRepository;
-import com.QRMenu.menu.security.JwtService;
 import com.QRMenu.menu.service.CategorysItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,10 +21,9 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-
 @Service
 @RequiredArgsConstructor
-public class CategoryItemServiceImpl implements CategorysItemService {
+public class CategorysItemServiceImpl implements CategorysItemService {
 
     private final ItemRepository itemRepository;
     private final CategorysItemRepository repository;
@@ -67,5 +64,10 @@ public class CategoryItemServiceImpl implements CategorysItemService {
         repository.save(categoriesItem);
 
         return CategoriesItemMapper.convert(categoriesItem);
+    }
+
+    @Override
+    public void deleteItem(Integer itemId, Integer categoryId) {
+        repository.deletedByitemIdAndcategoryId(itemId, categoryId);
     }
 }

@@ -10,4 +10,6 @@ import java.util.List;
 public interface CategorysItemRepository extends JpaRepository<CategoriesItem, Integer> {
 
     List<CategoriesItem> findByCategoryId(Integer categoryId);
+
+    void deletedByitemIdAndcategoryId(Integer itemId, Integer categoryId);
 }

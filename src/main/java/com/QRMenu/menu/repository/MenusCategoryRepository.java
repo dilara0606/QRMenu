@@ -5,5 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MenusCategoryRepository extends JpaRepository<MenusCategory, Long> {
+public interface MenusCategoryRepository extends JpaRepository<MenusCategory, Integer> {
+
+    void deletedBymenuIdAndcategoryId(Integer menuId, Integer categoryId);
 }

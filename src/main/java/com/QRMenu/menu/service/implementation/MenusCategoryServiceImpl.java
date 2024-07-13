@@ -33,4 +33,9 @@ public class MenusCategoryServiceImpl implements MenusCategoryService {
 
         return MenusCategoryMapper.convert(menusCategory);
     }
+
+    @Override
+    public void deleteCategory(Integer menuId, Integer categoryId) {
+        repository.deletedBymenuIdAndcategoryId(menuId, categoryId);
+    }
 }

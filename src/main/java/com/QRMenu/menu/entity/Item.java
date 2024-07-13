@@ -3,6 +3,7 @@ package com.QRMenu.menu.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -19,7 +20,9 @@ public class Item {
     String description;
     Integer price;
     String imageUrl;
+
     @CreatedDate
     LocalDateTime createdAt;
+    @LastModifiedDate
     LocalDateTime updatedAt;
 }

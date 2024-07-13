@@ -10,4 +10,6 @@ public interface CategorysItemService {
     List<ItemDto> getItemsByCategory(String token, String category);
 
     CategoriesItemDto addItem(Integer categoryId, Integer itemId);
+
+    void deleteItem(Integer itemId, Integer categoryId);
 }

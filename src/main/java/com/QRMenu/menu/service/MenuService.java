@@ -11,4 +11,7 @@ public interface MenuService {
 
     MenuDto deactivateMenu(Integer id);
 
+    void deleteMenu(Integer id);
+
+    MenuDto editMenu(Integer id, Menu menu);
 }
