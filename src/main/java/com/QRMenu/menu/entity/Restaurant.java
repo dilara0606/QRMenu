@@ -15,4 +15,5 @@ public class Restaurant {
     String address;
     String phone;
     String email;
+    String imageUrl;
 }

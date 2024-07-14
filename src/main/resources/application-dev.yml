@@ -47,6 +47,7 @@ application:
   mailing:
     frontend:
       activation-url: http://localhost:4200/activate-account
+      reset-password-url: http://localhost:4200/reset-password
 server:
   port: 8088
   upload:
