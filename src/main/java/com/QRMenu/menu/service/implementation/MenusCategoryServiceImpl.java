@@ -36,6 +36,6 @@ public class MenusCategoryServiceImpl implements MenusCategoryService {
 
     @Override
     public void deleteCategory(Integer menuId, Integer categoryId) {
-        repository.deletedBymenuIdAndcategoryId(menuId, categoryId);
+        repository.deleteByMenuIdAndCategoryId(menuId, categoryId);
     }
 }

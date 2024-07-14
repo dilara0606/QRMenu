@@ -1,11 +1,15 @@
 package com.QRMenu.menu.auth;
 
+import com.QRMenu.menu.token.Token;
 import jakarta.mail.MessagingException;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -35,13 +39,19 @@ public class AuthenticationController {
 
     @PostMapping("/forgot-password")
     public ResponseEntity<?> forgotPassword(@RequestBody @Valid ForgotPasswordRequest request) throws MessagingException {
-        authenticationService.forgotPassword(request.getEmail());
+        authenticationService.forgotPassword(request);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/reset-password-with-token")
+    public ResponseEntity<?> resetPassword(@RequestParam String token, @RequestParam String newPassword) {
+        authenticationService.resetPasswordWithToken(token, newPassword);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/reset-password")
-    public ResponseEntity<?> resetPassword(@RequestBody @Valid ResetPasswordRequest request) {
-        authenticationService.resetPassword(request.getToken(), request.getNewPassword());
+    public ResponseEntity<?> resetPassword(@RequestBody @Valid ResetPasswordRequest request, @RequestHeader(name = "Authorization") String token)  {
+        authenticationService.resetPassword(request, token);
         return ResponseEntity.ok().build();
     }
 

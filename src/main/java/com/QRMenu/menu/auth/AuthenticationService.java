@@ -127,8 +127,8 @@ public class AuthenticationService {
 
     }
 
-    public void forgotPassword(String email) throws MessagingException {
-        var user = userRepository.findByEmail(email)
+    public void forgotPassword(ForgotPasswordRequest request) throws MessagingException {
+        var user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
         var newToken = generateAndSaveResetPasswordToken(user);
@@ -156,18 +156,37 @@ public class AuthenticationService {
         return generatedToken;
     }
 
-    public void resetPassword(String token, String newPassword) {
+    public void resetPasswordWithToken(String token, String newPassword) {
         Token savedToken = tokenRepository.findByToken(token)
                 .orElseThrow(() -> new RuntimeException("Invalid token"));
+
         if (LocalDateTime.now().isAfter(savedToken.getExpiresAt())) {
             throw new RuntimeException("Reset password token has expired.");
         }
+
         var user = userRepository.findById(savedToken.getUser().getId())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
+        System.out.println(newPassword);
         user.setPasswordHash(passwordEncoder.encode(newPassword));
+        user.setLastModifiedDate(LocalDateTime.now());
         userRepository.save(user);
+
         savedToken.setValidatedAt(LocalDateTime.now());
         tokenRepository.save(savedToken);
+    }
+
+    public void resetPassword(ResetPasswordRequest request, String token) {
+
+        final String jwt = token.substring(7);
+        String email = jwtService.extractUsername(jwt);
+
+        System.out.println(email);
+        System.out.println(request.getPassword());
+
+        User user = userRepository.findByemail(email);
+
+        user.setPasswordHash(passwordEncoder.encode(request.getPassword()));
+        userRepository.save(user);
     }
 }

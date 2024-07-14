@@ -68,6 +68,6 @@ public class CategorysItemServiceImpl implements CategorysItemService {
 
     @Override
     public void deleteItem(Integer itemId, Integer categoryId) {
-        repository.deletedByitemIdAndcategoryId(itemId, categoryId);
+        repository.deleteByItemIdAndCategoryId(itemId, categoryId);
     }
 }

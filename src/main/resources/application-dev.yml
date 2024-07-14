@@ -6,12 +6,9 @@ spring:
     password: 06.ankara.06
   jpa:
     open-in-view: false
-    #    properties:
-    #      hibernate:
-    #        format_sql: true
     hibernate:
       ddl-auto: update
-    #    show-sql: true
+      show-sql: true
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
   mail:
