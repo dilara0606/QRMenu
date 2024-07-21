@@ -41,4 +41,9 @@ public class MenuController {
     public MenuDto editMenu(@PathVariable Integer id, @RequestBody Menu menu) {
         return service.editMenu(id, menu);
     }
+
+    @GetMapping("active-menu")
+    public MenuDto getActiveMenu() {
+        return service.getActiveMenu();
+    }
 }

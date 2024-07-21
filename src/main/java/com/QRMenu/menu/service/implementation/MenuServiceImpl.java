@@ -21,6 +21,7 @@ import java.io.OutputStream;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Base64;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -96,6 +97,13 @@ public class MenuServiceImpl implements MenuService {
         oldMenu.setDescription(menu.getDescription());
 
         return MenuMapper.convert(oldMenu);
+    }
+
+    @Override
+    public MenuDto getActiveMenu() {
+        Menu activeMenu = repository.findByIsActiveTrue()
+                .orElseThrow(() -> new NoSuchElementException("Active menu not found"));
+        return MenuMapper.convert(activeMenu);
     }
 
 }
