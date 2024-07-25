@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CategoryDto {
 
+    Integer id;
     String name;
     String imageUrl;
 }

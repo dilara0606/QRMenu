@@ -18,15 +18,15 @@ public class CategoryMapper {
         String mediaUrl = convertToLocalUrl(mediaPath);
 
         return CategoryDto.builder()
+                .id(category.getId())
                 .name(category.getName())
                 .imageUrl(mediaUrl)
                 .build();
     }
-    
-    private static String convertToLocalUrl(String mediaPath) 
-    {
+
+    private static String convertToLocalUrl(String mediaPath) {
         Path imagePath = Paths.get(mediaPath);
-        Path desktopPath = Paths.get("C:/Users/oğuz/Desktop");
+        Path desktopPath = Paths.get("C:/Users/Dilara/Desktop");
         Path relativePath = desktopPath.relativize(imagePath);
         String relativePathStr = relativePath.toString().replace("\\", "/");
         return "http://localhost:8088/api/v1/images/" + relativePathStr;
