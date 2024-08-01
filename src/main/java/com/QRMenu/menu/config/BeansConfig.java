@@ -52,7 +52,8 @@ public class BeansConfig {
         config.setAllowCredentials(true);
         config.setAllowedOrigins(Arrays.asList(
                 "http://localhost:3000",
-                "http://localhost:8088"
+                "http://localhost:8088",
+                "http://127.0.0.1:5500"
         ));
         config.setAllowedHeaders(Arrays.asList(
                 HttpHeaders.ORIGIN,

@@ -14,9 +14,11 @@ import java.time.LocalDate;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class MenuDto {
 
+    Integer id;
     String name;
     String description;
     LocalDate createdAt;
+    LocalDate updatedAt;
     boolean isActive;
     String imageUrl;
 }

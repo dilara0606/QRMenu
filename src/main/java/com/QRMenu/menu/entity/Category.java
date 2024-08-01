@@ -2,6 +2,10 @@ package com.QRMenu.menu.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -13,4 +17,9 @@ public class Category {
     Integer id;
     String name;
     String imageUrl;
+
+    @CreatedDate
+    LocalDate createdAt;
+    @LastModifiedDate
+    LocalDate updatedAt;
 }

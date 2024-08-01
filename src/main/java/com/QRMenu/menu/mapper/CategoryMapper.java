@@ -21,6 +21,8 @@ public class CategoryMapper {
                 .id(category.getId())
                 .name(category.getName())
                 .imageUrl(mediaUrl)
+                .createdAt(category.getCreatedAt())
+                .updatedAt(category.getUpdatedAt())
                 .build();
     }
 

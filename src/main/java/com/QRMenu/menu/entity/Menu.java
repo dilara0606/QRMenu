@@ -20,9 +20,9 @@ public class Menu {
     String description;
 
     @CreatedDate
-    LocalDateTime createdAt;
+    LocalDate createdAt;
     @LastModifiedDate
-    LocalDateTime updatedAt;
+    LocalDate updatedAt;
 
     boolean isActive;
     String imageUrl;

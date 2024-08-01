@@ -30,19 +30,7 @@ public class CategorysItemServiceImpl implements CategorysItemService {
     private final CategoryRepository categoryRepository;
 
     @Override
-    public List<ItemDto> getItemsByCategory(String token, String category) {
-//        final String jwt = token.substring(7);
-//        String email = jwtService.extractUsername(jwt);
-//
-//        User user = userRepository.findByemail(email);
-
-        Optional<Category> optionalCategory = categoryRepository.findByName(category);
-
-        if (optionalCategory.isEmpty()) {
-            return Collections.emptyList();
-        }
-
-        Integer categoryId = optionalCategory.get().getId();
+    public List<ItemDto> getItemsByCategory(Integer categoryId) {
         List<CategoriesItem> categoryItems = repository.findByCategoryId(categoryId);
         List<Item> items = categoryItems.stream()
                 .map(categoryItem -> itemRepository.findById(categoryItem.getItem().getId()).orElse(null))

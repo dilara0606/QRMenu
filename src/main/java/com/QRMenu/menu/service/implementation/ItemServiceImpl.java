@@ -14,7 +14,9 @@ import org.springframework.stereotype.Service;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Base64;
@@ -24,6 +26,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ItemServiceImpl implements ItemService {
 
+    private final ItemRepository itemRepository;
     @Value("${server.upload.directory}")
     private String uploadDir;
     private final ItemRepository repository;
@@ -31,8 +34,48 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public ItemDto saveItem(Item item) {
 
-        item.setCreatedAt(LocalDateTime.now());
-        item.setUpdatedAt(LocalDateTime.now());
+        String imageUrl = item.getImageUrl();
+
+        if (imageUrl != null) {
+            if (imageUrl.startsWith("data:image/")) {
+                // Base64 formatındaki resmi işleme
+                String[] parts = imageUrl.split(",");
+                String imageString = parts.length > 1 ? parts[1] : ""; // Check if parts array has at least 2 elements
+
+                String fileName = "menu_image_" + System.currentTimeMillis() + ".jpg";
+                String filePath = uploadDir + "/" + fileName;
+
+                try (OutputStream outputStream = new FileOutputStream(filePath)) {
+                    byte[] imageBytes = Base64.getDecoder().decode(imageString);
+                    outputStream.write(imageBytes);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                item.setImageUrl(filePath);
+            } else {
+                // URL formatındaki resmi işleme
+                String fileName = "menu_image_" + System.currentTimeMillis() + ".jpg";
+                String filePath = uploadDir + "/" + fileName;
+
+                try (InputStream inputStream = new URL(imageUrl).openStream();
+                     OutputStream outputStream = new FileOutputStream(filePath)) {
+
+                    byte[] buffer = new byte[1024];
+                    int bytesRead;
+
+                    while ((bytesRead = inputStream.read(buffer)) != -1) {
+                        outputStream.write(buffer, 0, bytesRead);
+                    }
+
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                item.setImageUrl(filePath);
+            }
+        }
+
+        item.setCreatedAt(LocalDate.now());
+        item.setUpdatedAt(LocalDate.now());
 
         return ItemMapper.convert(repository.save(item)) ;
     }
@@ -46,31 +89,55 @@ public class ItemServiceImpl implements ItemService {
     public ItemDto editItem(Integer id, Item item) {
 
         Item oldItem = repository.findByid(id);
+        String imageUrl = item.getImageUrl();
 
-        if(item.getImageUrl() != null){
-            String base64Image = item.getImageUrl();
-            String[] parts = base64Image.split(",");
-            String imageString = parts[1];
 
-            String fileName = "menu_image_" + System.currentTimeMillis() + ".jpg";
-            String filePath = uploadDir + "/" + fileName;
+        if (imageUrl != null) {
+            if (imageUrl.startsWith("data:image/")) {
+                // Base64 formatındaki resmi işleme
+                String[] parts = imageUrl.split(",");
+                String imageString = parts.length > 1 ? parts[1] : ""; // Check if parts array has at least 2 elements
 
-            try (OutputStream outputStream = new FileOutputStream(filePath)) {
-                byte[] imageBytes = Base64.getDecoder().decode(imageString);
-                outputStream.write(imageBytes);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+                String fileName = "menu_image_" + System.currentTimeMillis() + ".jpg";
+                String filePath = uploadDir + "/" + fileName;
+
+                try (OutputStream outputStream = new FileOutputStream(filePath)) {
+                    byte[] imageBytes = Base64.getDecoder().decode(imageString);
+                    outputStream.write(imageBytes);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                oldItem.setImageUrl(filePath);
+            } else {
+                // URL formatındaki resmi işleme
+                String fileName = "menu_image_" + System.currentTimeMillis() + ".jpg";
+                String filePath = uploadDir + "/" + fileName;
+
+                try (InputStream inputStream = new URL(imageUrl).openStream();
+                     OutputStream outputStream = new FileOutputStream(filePath)) {
+
+                    byte[] buffer = new byte[1024];
+                    int bytesRead;
+
+                    while ((bytesRead = inputStream.read(buffer)) != -1) {
+                        outputStream.write(buffer, 0, bytesRead);
+                    }
+
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                oldItem.setImageUrl(filePath);
             }
-            oldItem.setImageUrl(filePath);
         }
 
         //fronttan namei bak!
-        oldItem.setUpdatedAt(LocalDateTime.now());
+        oldItem.setUpdatedAt(LocalDate.now());
         oldItem.setPrice(item.getPrice());
         oldItem.setName(item.getName());
         oldItem.setDescription(item.getDescription());
-
+        itemRepository.save(oldItem);
         return ItemMapper.convert(oldItem);
+
     }
 
     @Override

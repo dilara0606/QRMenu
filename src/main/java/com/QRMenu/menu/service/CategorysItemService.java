@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CategorysItemService {
 
-    List<ItemDto> getItemsByCategory(String token, String category);
+    List<ItemDto> getItemsByCategory(Integer categoryId);
 
     CategoriesItemDto addItem(Integer categoryId, Integer itemId);
 

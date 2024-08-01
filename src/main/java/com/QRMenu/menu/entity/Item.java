@@ -22,7 +22,7 @@ public class Item {
     String imageUrl;
 
     @CreatedDate
-    LocalDateTime createdAt;
+    LocalDate createdAt;
     @LastModifiedDate
-    LocalDateTime updatedAt;
+    LocalDate updatedAt;
 }

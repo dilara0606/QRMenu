@@ -15,10 +15,12 @@ public class ItemMapper {
         String mediaUrl = convertToLocalUrl(mediaPath);
 
         return ItemDto.builder()
+                .id(item.getId())
                 .name(item.getName())
                 .description(item.getDescription())
                 .price(item.getPrice())
                 .imageUrl(mediaUrl)
+                .updatedAt(item.getUpdatedAt())
                 .build();
     }
 

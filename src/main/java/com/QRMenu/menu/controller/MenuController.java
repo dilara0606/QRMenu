@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/admin/menu")
 @RequiredArgsConstructor
@@ -42,8 +44,8 @@ public class MenuController {
         return service.editMenu(id, menu);
     }
 
-    @GetMapping("active-menu")
-    public MenuDto getActiveMenu() {
-        return service.getActiveMenu();
+    @GetMapping("all-menus")
+    public List<MenuDto> getAllMenus() {
+        return service.getAll();
     }
 }

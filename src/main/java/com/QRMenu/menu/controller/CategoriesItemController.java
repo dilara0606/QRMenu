@@ -17,9 +17,9 @@ public class CategoriesItemController {
 
     private final CategorysItemService service;
 
-    @GetMapping("/all-category")
-    public List<ItemDto> getItemsByCategory(@RequestHeader(name = "Authorization") String token, @PathVariable String category){
-        return service.getItemsByCategory(token, category);
+    @GetMapping("/all-category/{categoryId}")
+    public List<ItemDto> getItemsByCategory(@PathVariable Integer categoryId){
+        return service.getItemsByCategory(categoryId);
     }
 
     @GetMapping("/add-item/{categoryId}")
