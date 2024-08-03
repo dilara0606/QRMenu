@@ -22,7 +22,6 @@ function injectStyles() {
   })
   .then((response) => response.json())
   .then((data) => {
-    console.log("Data:", data);
   
     const tableBody = document.querySelector("tbody"); // Select the table body
     tableBody.innerHTML = ""; // Clear the table
@@ -91,7 +90,6 @@ function injectStyles() {
   
       return row;
     }
-  
     
     data.forEach(item => {
       tableBody.appendChild(createRow(item));
@@ -107,6 +105,7 @@ function injectStyles() {
         if (item) {
           // Fill in the form with the item data
           document.getElementById('nameInput').value = item.name;
+          document.getElementById('priceInput').value = item.price;
           document.getElementById('descriptionInput').value = item.description;
           document.getElementById('imageTitle').textContent = item.imageUrl ? "Image Selected" : "No Image Selected";
           document.getElementById('selectedImage').src = item.imageUrl || "";
@@ -122,14 +121,12 @@ function injectStyles() {
     document.querySelectorAll('a[data-original-title="Delete"]').forEach(link => {
       link.addEventListener('click', (event) => {
         const id = event.target.getAttribute('data-id');
-        if (confirm('Are you sure you want to delete this menu?')) {
-          deleteMenu(id);
+        if (confirm('Are you sure you want to delete this product?')) {
+          deleteProduct(id);
         }
       });
     });
   
-    // Add drag-and-drop functionality
-    enableDragAndDrop();
   })
   .catch((error) => {
     console.error("Error fetching data:", error);
@@ -142,6 +139,7 @@ function injectStyles() {
     const name = document.getElementById('nameInput').value;
     const description = document.getElementById('descriptionInput').value;
     const imageUrl = document.getElementById('selectedImage').src;
+    const price = document.getElementById('priceInput').value;
   
     if (id) {
       fetch(`http://localhost:8088/api/v1/admin/item/edit-item/${id}`, {
@@ -152,39 +150,38 @@ function injectStyles() {
         body: JSON.stringify({
           name: name,
           description: description,
+          price: price,
           imageUrl: imageUrl
         })
       })
       .then(response => response.json())
       .then(data => {
-        console.log("Update successful:", data);
         fetchData();
         document.getElementById('editRow').style.display = 'none';
-        showToast("Menu Update Successful!") // Refresh the table with updated data
+        showToast("Product Update Successful!") // Refresh the table with updated data
       })
       .catch(error => {
-        console.error("Error updating menu:", error);
+        console.error("Error updating product:", error);
       });
     }
   });  
   
-  function deleteMenu(id) {
+  function deleteProduct(id) {
     fetch(`http://localhost:8088/api/v1/admin/item/delete-item/${id}`, {
         method: "DELETE",
     })
     .then((response) => response.text()) // Get response as text
     .then((text) => {
-        console.log("Deletion Result:", text);
-        if (text.trim() === "Menu deleted successfully") { // Check the response
-            showToast('Menu deleted successfully!');
+        if (text.trim() === "Category deleted successfully") { // Check the response
+            showToast('Product deleted successfully!');
             fetchData(); 
         } else {
-            showToast('An error occurred while deleting the menu.');
+            showToast('An error occurred while deleting the product.');
         }
     })
     .catch((error) => {
-        console.error("Error deleting menu:", error);
-        showToast('An error occurred while deleting the menu.');
+        console.error("Error deleting product:", error);
+        showToast('An error occurred while deleting the product.');
     });
   }
   
@@ -205,127 +202,105 @@ function injectStyles() {
     toast.show();
   }
   
-  function enableDragAndDrop() {
-  const rows = document.querySelectorAll('tbody tr');
-  let draggedRow = null;
-  
-  rows.forEach(row => {
-      row.setAttribute('draggable', true); // Satırların sürüklenebilir olduğunu belirtir.
-  
-      row.addEventListener('dragstart', (event) => {
-          draggedRow = event.currentTarget;
-          event.currentTarget.classList.add('dragging');
-      });
-  
-      row.addEventListener('dragend', (event) => {
-          event.currentTarget.classList.remove('dragging');
-      });
-  
-      row.addEventListener('dragover', (event) => {
-          event.preventDefault();
-      });
-  
-      row.addEventListener('dragenter', (event) => {
-          if (event.currentTarget.tagName === 'TR' && event.currentTarget !== draggedRow) {
-              event.currentTarget.classList.add('over');
-          }
-      });
-  
-      row.addEventListener('dragleave', (event) => {
-          event.currentTarget.classList.remove('over');
-      });
-  
-      row.addEventListener('drop', (event) => {
-          event.preventDefault();
-          event.currentTarget.classList.remove('over');
-  
-          if (event.currentTarget.tagName === 'TR' && event.currentTarget !== draggedRow) {
-              const tableBody = document.querySelector('tbody');
-              
-              // İlk satırı referans al
-              const firstRow = tableBody.children[0];
-              alert("emin misin")
-              
-              // Sürüklenen satırı en üst satır olarak yerleştir
-              if (draggedRow !== firstRow) {
-                  tableBody.insertBefore(draggedRow, firstRow);
-              }
-              
-              activateTopMenu(); // Sıralamayı backend'de güncellemek için fonksiyonu çağır.
-          }
-      });
-  });
-  }
-  
-  function activateTopMenu() {
-  const rows = document.querySelectorAll('tbody tr');
-  const topRowId = rows[0].dataset.id; // En üst satırın ID'si
-  
-  fetch(`http://localhost:8088/api/v1/admin/menu/activate-menu/${topRowId}`, {
-      method: 'GET'
-  })
-  .then(response => {
-      if (!response.ok) {
-          throw new Error('Network response was not ok.');
-      }
-      return response.json(); // Yanıtı JSON olarak döndür
-  })
-  .then(data => {
-      console.log("Activate menu result:", data);
-      if (data) {
-          showToast('Menu activated successfully!');
-          fetchData()
-      } else {
-          showToast('An error occurred while activating the menu.');
-      }
-  })
-  .catch(error => {
-      console.error("Error activating menu:", error);
-      showToast('An error occurred while activating the menu.');
-  });
-  }
-  
-  function createMenu() {
-  const name = document.getElementById('nameInput2').value;
-  const description = document.getElementById('descriptionInput2').value;
-  const imageUrl = document.getElementById('selectedImage2').src;
-  
-  if (!name || !description) {
+  function createProduct() {
+    const name = document.getElementById('nameInput2').value;
+    const description = document.getElementById('descriptionInput2').value;
+    const imageUrl = document.getElementById('selectedImage2').src;
+    const price = document.getElementById('priceInput2').value;
+    
+    if (!name || !description) {
       alert('Please fill out all fields.');
       return;
-  }
-  
-  const menu = {
+    }
+    
+    const product = {
       name: name,
       description: description,
+      price: price,
       imageUrl: imageUrl
-  };
-  
-  fetch('http://localhost:8088/api/v1/admin/item/create-item', {
+    };
+    
+    fetch('http://localhost:8088/api/v1/admin/item/create-item', {
       method: 'POST',
       headers: {
-          'Content-Type': 'application/json'
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify(menu)
-  })
-  .then(response => {
+      body: JSON.stringify(product)
+    })
+    .then(response => {
       if (!response.ok) {
-          throw new Error('Network response was not ok');
+        throw new Error('Network response was not ok');
       }
-      return response.text();
-  })
-  .then(data => {
-      showToast("Menu create successfully!")
+      return response.json();
+    })
+    .then(data => {
+      console.log(data);
+      showToast("Product created successfully!");
+      loadCategories(data.id);
       fetchData();
-  })
-  .catch(error => {
+    })
+    .catch(error => {
       console.error('There was a problem with the fetch operation:', error);
-      alert('Failed to create menu.');
-  });
+      alert('Failed to create product.');
+    });
   }
   
   document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("create-product").addEventListener("click", createMenu);
+    document.getElementById("create-product").addEventListener("click", createProduct);
   });
   
+  function toggleCreateRow() {
+    var editRowProduct = document.getElementById('editRowProduct');
+    editRowProduct.style.display = editRowProduct.style.display === 'none' ? 'block' : 'none';
+  }
+  
+  function previewImage2(event) {
+    var reader = new FileReader();
+    reader.onload = function() {
+      var output = document.getElementById('selectedImage2');
+      output.src = reader.result;
+      output.style.display = 'block';
+    }
+    reader.readAsDataURL(event.target.files[0]);
+    document.getElementById('imageTitle2').innerText = event.target.files[0].name;
+  }
+  
+  function loadCategories(productId) {
+    fetch('http://localhost:8088/api/v1/admin/category/categories')
+      .then(response => response.json())
+      .then(categories => {
+        var categoriesContainer = document.getElementById('categoriesContainer');
+        categoriesContainer.innerHTML = '';
+        categories.forEach(category => {
+          console.log(category);
+          var categoryCard = document.createElement('div');
+          categoryCard.className = 'card m-2 p-2';
+          categoryCard.style.width = '150px';
+          categoryCard.style.cursor = 'pointer';
+          categoryCard.innerHTML = `
+            <div class="d-flex justify-content-between align-items-center">
+              <span>${category.name}</span>
+              <i class="material-icons" onclick="addCategoryToProduct(${category.id}, ${productId})">add</i>
+            </div>
+          `;
+          categoriesContainer.appendChild(categoryCard);
+        });
+        document.getElementById('categoriesRow').style.display = 'flex';
+      })
+      .catch(error => console.error('Error fetching categories:', error));
+  }
+  
+  function addCategoryToProduct(categoryId, productId) {
+    fetch(`http://localhost:8088/api/v1/admin/add-item/${categoryId}?itemId=${productId}`)
+      .then(response => {
+        if (response.ok) {
+          console.log(`Category ${categoryId} added to product`);
+          showToast("Category added to product")
+        } else {
+          console.error(`Error adding category ${categoryId} to product`);
+        }
+      })
+      .catch(error => console.error('Error:', error));
+  }
+
   fetchData();

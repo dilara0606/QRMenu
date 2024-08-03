@@ -367,8 +367,18 @@
                                 <label for="descriptionInput" class="form-label"><h6 class="mb-0">Description</h6></label>
                                 <textarea class="form-control" id="descriptionInput" rows="3" placeholder="Enter description"></textarea>
                               </div>
+                              <div class="flex-grow-1">
+                                <label for="priceInput" class="form-label"><h6 class="mb-0">Price</h6></label>
+                                <input type="number" class="form-control" id="priceInput" placeholder="Type Price" step="1.0">
+                              </div>                              
                             </div>
                             <button type="submit" id="edit-product" class="btn btn-primary mt-2">Save</button>
+                          </div>
+                        </div>
+                        <div class="row mt-4" id="categoriesRow2" style="display: none;">
+                          <div class="col-12">
+                            <h6 class="text-capitalize ps-3">Select Categories</h6>
+                            <div class="d-flex flex-wrap" id="categoriesContainer2"></div>
                           </div>
                         </div>
                         <div class="card-footer p-3">
@@ -400,11 +410,11 @@
                       <div class="card">
                         <div class="card-header p-3 pt-2">
                           <div class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center border-radius-xl mt-n4 position-absolute">
-                            <i class="material-icons opacity-10">add_a_photo</i> <!-- Camera icon -->
+                            <i class="material-icons opacity-10">add_a_photo</i>
                           </div>
                           <div class="text-end pt-1">
                             <p class="text-sm mb-0 text-capitalize">Select Image</p>
-                            <h4 id="imageTitle2" class="mb-0">No Image Selected</h4> <!-- Placeholder text -->
+                            <h4 id="imageTitle2" class="mb-0">No Image Selected</h4>
                           </div>
                         </div>
                         <hr class="dark horizontal my-0">
@@ -421,10 +431,9 @@
                       <div class="card">
                         <div class="card-header p-3 pt-2">
                           <div class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center border-radius-xl mt-n4 position-absolute">
-                            <i class="material-icons opacity-10">add</i> <!-- Changed icon to account_circle -->
+                            <i class="material-icons opacity-10">add</i>
                           </div>
                           <div class="text-end pt-1">
-                            <p class="text-sm mb-0 text-capitalize"></p>
                             <h4 class="mb-0">Enter Product Information</h4>
                           </div>
                         </div>
@@ -442,24 +451,29 @@
                               </div>
                               <div class="flex-grow-1">
                                 <label for="priceInput2" class="form-label"><h6 class="mb-0">Price</h6></label>
-                                <textarea class="form-control" id="priceInput2" rows="3" placeholder="Type Price"></textarea>
+                                <input type="number" class="form-control" id="priceInput2" placeholder="Type Price" step="0.01">
                               </div>
                             </div>
-                            <button type="submit" id="create-product" class="btn btn-primary mt-2">Save</button>
+                            <button type="button" id="create-product" class="btn btn-primary mt-2">Save</button>
+                          </div>
+                        </div>
+                        <div class="row mt-4" id="categoriesRow" style="display: none;">
+                          <div class="col-12">
+                            <h6 class="text-capitalize ps-3">Select Categories</h6>
+                            <div class="d-flex flex-wrap" id="categoriesContainer"></div>
                           </div>
                         </div>
                         <div class="card-footer p-3">
                         </div>
                       </div>
                     </div>               
-                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-
+      </div>
       <div class="position-fixed bottom-1 end-1 z-index-2">
         <div id="successToast" class="toast fade hide p-2 bg-white" role="alert" aria-live="assertive" aria-atomic="true">
           <div class="toast-header border-0">
@@ -656,6 +670,26 @@
       title.textContent = 'No Image Selected'; // Reset title text
     }
   }
+
+  document.getElementById('priceInput').addEventListener('keypress', function (event) {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (
+      (charCode !== 46 && charCode > 31 && (charCode < 48 || charCode > 57)) ||
+      (charCode === 46 && event.target.value.includes('.'))
+    ) {
+      event.preventDefault();
+    }
+  });
+
+  document.getElementById('priceInput2').addEventListener('keypress', function (event) {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (
+      (charCode !== 46 && charCode > 31 && (charCode < 48 || charCode > 57)) ||
+      (charCode === 46 && event.target.value.includes('.'))
+    ) {
+      event.preventDefault();
+    }
+  });
 </script>
 
   <!-- Github buttons -->

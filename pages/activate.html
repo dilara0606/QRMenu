@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="..\assets\css\sign-in.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .login {
+            text-align: center;
+        }
+        .login h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .activation-code {
+            display: flex;
+            justify-content: center;
+        }
+        .activation-code input {
+            width: 60px;
+            height: 60px;
+            text-align: center;
+            font-size: 24px;
+            margin: 5px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            transition: border-color 0.3s;
+        }
+        .activation-code input:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+        .login button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: #8f2c24;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .login button:hover {
+            background-color: #6f110a;
+        }
+    </style>
+    
+</head>
+<body>
+    <section>
+        <div class="login">
+            <h2>Enter Your Activation Code</h2>
+            <form onsubmit="event.preventDefault(); activateAccount();">
+                <div class="activation-code">
+                    <input type="text" maxlength="1" id="code1" name="code1" title="" placeholder="_" oninput="moveToNext(this, 'code2')" onkeydown="moveToPrev(event, 'code1')">
+                    <input type="text" maxlength="1" id="code2" name="code2" title="" placeholder="_" oninput="moveToNext(this, 'code3')" onkeydown="moveToPrev(event, 'code1')">
+                    <input type="text" maxlength="1" id="code3" name="code3" title="" placeholder="_" oninput="moveToNext(this, 'code4')" onkeydown="moveToPrev(event, 'code2')">
+                    <input type="text" maxlength="1" id="code4" name="code4" title="" placeholder="_" oninput="moveToNext(this, 'code5')" onkeydown="moveToPrev(event, 'code3')">
+                    <input type="text" maxlength="1" id="code5" name="code5" title="" placeholder="_" oninput="moveToNext(this, 'code6')" onkeydown="moveToPrev(event, 'code4')">
+                    <input type="text" maxlength="1" id="code6" name="code6" title="" placeholder="_" onkeydown="moveToPrev(event, 'code5')">
+                </div>
+                <button type="submit" id="send">Send</button>
+            </form>
+        </div>        
+        
+    </section>
+
+    <script src="../assets/js/components/Authenticate.js"></script>
+
+</body>
+</html>

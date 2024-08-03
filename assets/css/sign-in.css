@@ -1,0 +1,23 @@
+section {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.error-message {
+    color: red;
+    font-size: 12px;
+    display: none; 
+  }
+
+  .toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 35%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
