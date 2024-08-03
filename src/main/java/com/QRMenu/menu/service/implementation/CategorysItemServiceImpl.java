@@ -41,7 +41,7 @@ public class CategorysItemServiceImpl implements CategorysItemService {
     }
 
     @Override
-    public CategoriesItemDto addItem(Integer categoryId, Integer itemId) {
+    public void addItem(Integer categoryId, Integer itemId) {
 
         Category category = categoryRepository.findByid(categoryId);
         Item item = itemRepository.findByid(itemId);
@@ -51,11 +51,15 @@ public class CategorysItemServiceImpl implements CategorysItemService {
         categoriesItem.setItem(item);
         repository.save(categoriesItem);
 
-        return CategoriesItemMapper.convert(categoriesItem);
     }
 
     @Override
     public void deleteItem(Integer itemId, Integer categoryId) {
         repository.deleteByItemIdAndCategoryId(itemId, categoryId);
+    }
+
+    @Override
+    public List<CategoriesItemDto> getCategoriesByItem(Integer itemId) {
+        return CategoriesItemMapper.convertList(repository.findByItemId(itemId));
     }
 }

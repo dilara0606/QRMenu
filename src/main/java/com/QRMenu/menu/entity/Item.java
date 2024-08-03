@@ -18,7 +18,7 @@ public class Item {
     Integer id;
     String name;
     String description;
-    Integer price;
+    Double price;
     String imageUrl;
 
     @CreatedDate

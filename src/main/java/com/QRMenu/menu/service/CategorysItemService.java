@@ -9,7 +9,9 @@ public interface CategorysItemService {
 
     List<ItemDto> getItemsByCategory(Integer categoryId);
 
-    CategoriesItemDto addItem(Integer categoryId, Integer itemId);
+    void addItem(Integer categoryId, Integer itemId);
 
     void deleteItem(Integer itemId, Integer categoryId);
+
+    List<CategoriesItemDto> getCategoriesByItem(Integer itemId);
 }

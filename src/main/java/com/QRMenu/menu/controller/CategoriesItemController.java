@@ -17,19 +17,25 @@ public class CategoriesItemController {
 
     private final CategorysItemService service;
 
-    @GetMapping("/all-category/{categoryId}")
+    @GetMapping("/all-item/{categoryId}")
     public List<ItemDto> getItemsByCategory(@PathVariable Integer categoryId){
         return service.getItemsByCategory(categoryId);
     }
 
     @GetMapping("/add-item/{categoryId}")
-    public CategoriesItemDto addItem(@PathVariable Integer categoryId, @RequestParam Integer itemId){
-        return service.addItem(categoryId, itemId);
+    public ResponseEntity<String> addItem(@PathVariable Integer categoryId, @RequestParam Integer itemId){
+        service.addItem(categoryId, itemId);
+        return new ResponseEntity<>("Item deleted successfully", HttpStatus.OK);
     }
 
     @DeleteMapping("delete-item/{categoryId}")
     public ResponseEntity<String> deleteItem(@PathVariable Integer categoryId, @RequestParam Integer itemId) {
         service.deleteItem(itemId, categoryId);
         return new ResponseEntity<>("Item deleted successfully", HttpStatus.OK);
+    }
+
+    @GetMapping("/all-categories/{itemId}")
+    public List<CategoriesItemDto> getAllCategoriesItem(@PathVariable Integer itemId){
+        return service.getCategoriesByItem(itemId);
     }
 }

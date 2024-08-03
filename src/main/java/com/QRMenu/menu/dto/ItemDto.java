@@ -18,7 +18,7 @@ public class ItemDto {
     Integer id;
     String name;
     String description;
-    Integer price;
+    Double price;
     String imageUrl;
     LocalDate createdAt;
     LocalDate updatedAt;

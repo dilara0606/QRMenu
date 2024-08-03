@@ -6,8 +6,11 @@ import com.QRMenu.menu.entity.Category;
 import com.QRMenu.menu.entity.Item;
 import com.QRMenu.menu.mapper.CategoryMapper;
 import com.QRMenu.menu.mapper.ItemMapper;
+import com.QRMenu.menu.repository.CategoryRepository;
+import com.QRMenu.menu.repository.CategorysItemRepository;
 import com.QRMenu.menu.repository.ItemRepository;
 import com.QRMenu.menu.service.ItemService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -27,6 +30,7 @@ import java.util.List;
 public class ItemServiceImpl implements ItemService {
 
     private final ItemRepository itemRepository;
+    private final CategorysItemRepository categorysItemRepository;
     @Value("${server.upload.directory}")
     private String uploadDir;
     private final ItemRepository repository;
@@ -81,7 +85,9 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    @Transactional
     public void deleteItem(Integer id) {
+        categorysItemRepository.deleteByItemId(id);
         repository.deleteById(id);
     }
 

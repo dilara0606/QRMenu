@@ -18,4 +18,8 @@ public interface CategorysItemRepository extends JpaRepository<CategoriesItem, I
     @Transactional
     @Query("DELETE FROM CategoriesItem ic WHERE ic.item = :itemId AND ic.category = :categoryId")
     void deleteByItemIdAndCategoryId(Integer itemId, Integer categoryId);;
+
+    List<CategoriesItem> findByItemId(Integer itemId);
+
+    void deleteByItemId(Integer id);
 }
