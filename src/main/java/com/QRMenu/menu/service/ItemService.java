@@ -8,11 +8,11 @@ import java.util.List;
 
 public interface ItemService {
 
-    ItemDto saveItem(Item item);
+    ItemDto saveItem(Item item, String token);
 
     void deleteItem(Integer id);
 
     ItemDto editItem(Integer id, Item item);
 
-    List<ItemDto> getAll();
+    List<ItemDto> getAll(String token);
 }

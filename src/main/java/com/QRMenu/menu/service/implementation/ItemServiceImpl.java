@@ -4,11 +4,14 @@ import com.QRMenu.menu.dto.CategoryDto;
 import com.QRMenu.menu.dto.ItemDto;
 import com.QRMenu.menu.entity.Category;
 import com.QRMenu.menu.entity.Item;
+import com.QRMenu.menu.entity.User;
 import com.QRMenu.menu.mapper.CategoryMapper;
 import com.QRMenu.menu.mapper.ItemMapper;
 import com.QRMenu.menu.repository.CategoryRepository;
 import com.QRMenu.menu.repository.CategorysItemRepository;
 import com.QRMenu.menu.repository.ItemRepository;
+import com.QRMenu.menu.repository.UserRepository;
+import com.QRMenu.menu.security.JwtService;
 import com.QRMenu.menu.service.ItemService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -31,12 +34,19 @@ public class ItemServiceImpl implements ItemService {
 
     private final ItemRepository itemRepository;
     private final CategorysItemRepository categorysItemRepository;
+    private final UserRepository userRepository;
+    private final JwtService jwtService;
     @Value("${server.upload.directory}")
     private String uploadDir;
     private final ItemRepository repository;
 
     @Override
-    public ItemDto saveItem(Item item) {
+    public ItemDto saveItem(Item item, String token) {
+
+        final String jwt = token.substring(7);
+        String email = jwtService.extractUsername(jwt);
+
+        User user = userRepository.findByemail(email);
 
         String imageUrl = item.getImageUrl();
 
@@ -147,7 +157,13 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<ItemDto> getAll() {
+    public List<ItemDto> getAll(String token) {
+
+        final String jwt = token.substring(7);
+        String email = jwtService.extractUsername(jwt);
+
+        User user = userRepository.findByemail(email);
+
         return ItemMapper.convertList(repository.findAll());
     }
 }

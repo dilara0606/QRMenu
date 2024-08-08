@@ -18,8 +18,8 @@ public class ItemController {
     private final ItemService service;
 
     @PostMapping("/create-item")
-    public ItemDto createItem(@RequestBody Item item) {
-       return service.saveItem(item);
+    public ItemDto createItem(@RequestBody Item item, @RequestHeader(name = "Authorization") String token) {
+       return service.saveItem(item, token);
     }
 
     @DeleteMapping("/delete-item/{id}")
@@ -34,7 +34,7 @@ public class ItemController {
     }
 
     @GetMapping("/all-item")
-    public List<ItemDto> getAllItem() {
-        return service.getAll();
+    public List<ItemDto> getAllItem(@RequestHeader(name = "Authorization") String token) {
+        return service.getAll(token);
     }
 }
