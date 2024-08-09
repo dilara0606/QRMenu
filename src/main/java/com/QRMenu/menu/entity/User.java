@@ -27,11 +27,15 @@ public class User implements UserDetails, Principal{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    private String name;
+    private String surname;
     @Column(name = "username", unique = true)
     private String username;
     private String passwordHash;
     @Column(name = "email", unique = true)
     private String email;
+    private String phone;
+    private String location;
     private boolean accountLocked;
 
     @CreatedDate
@@ -85,8 +89,7 @@ public class User implements UserDetails, Principal{
         return enabled;
     }
 
-    @Override
-    public String getName() {
-        return username;
+    public String fullName(){
+        return name + " " + surname;
     }
 }
