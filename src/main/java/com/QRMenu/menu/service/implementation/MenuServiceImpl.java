@@ -36,7 +36,7 @@ public class MenuServiceImpl implements MenuService {
     private final MenuRepository repository;
 
     @Override
-    public void saveMenu(Menu menu) {
+    public MenuDto saveMenu(Menu menu) {
 
         menu.setActive(false);
         menu.setCreatedAt(LocalDate.now());
@@ -82,7 +82,7 @@ public class MenuServiceImpl implements MenuService {
             }
         }
 
-        repository.save(menu);
+        return MenuMapper.convert(repository.save(menu));
     }
 
     @Override

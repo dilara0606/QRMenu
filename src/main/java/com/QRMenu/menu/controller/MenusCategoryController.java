@@ -1,11 +1,14 @@
 package com.QRMenu.menu.controller;
 
+import com.QRMenu.menu.dto.CategoriesItemDto;
 import com.QRMenu.menu.dto.MenusCategoryDto;
 import com.QRMenu.menu.service.MenusCategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/admin")
@@ -23,5 +26,10 @@ public class MenusCategoryController {
     public ResponseEntity<String> deleteCategory(@PathVariable Integer menuId, @RequestParam Integer categoryId) {
         service.deleteCategory(menuId, categoryId);
         return new ResponseEntity<>("Category deleted successfully", HttpStatus.OK);
+    }
+
+    @GetMapping("/all-categories-for-menu/{menuId}")
+    public List<MenusCategoryDto> getAllMenusCategory(@PathVariable Integer menuId){
+        return service.getCategoriesByMenu(menuId);
     }
 }

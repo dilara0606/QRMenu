@@ -18,9 +18,8 @@ public class MenuController {
     private final MenuService service;
 
     @PostMapping("/create-menu")
-    public ResponseEntity<String> createMenu(@RequestBody Menu menu) {
-        service.saveMenu(menu);
-        return new ResponseEntity<>("Menu created successfully", HttpStatus.CREATED);
+    public MenuDto createMenu(@RequestBody Menu menu) {
+        return service.saveMenu(menu);
     }
 
     @GetMapping("/activate-menu/{id}")
@@ -47,5 +46,10 @@ public class MenuController {
     @GetMapping("all-menus")
     public List<MenuDto> getAllMenus() {
         return service.getAll();
+    }
+
+    @GetMapping("get-active-menu")
+    public MenuDto getActiveMenu() {
+        return service.getActiveMenu();
     }
 }

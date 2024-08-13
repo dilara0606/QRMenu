@@ -4,6 +4,7 @@ import com.QRMenu.menu.dto.MenusCategoryDto;
 import com.QRMenu.menu.entity.Category;
 import com.QRMenu.menu.entity.Menu;
 import com.QRMenu.menu.entity.MenusCategory;
+import com.QRMenu.menu.mapper.CategoriesItemMapper;
 import com.QRMenu.menu.mapper.MenusCategoryMapper;
 import com.QRMenu.menu.repository.CategoryRepository;
 import com.QRMenu.menu.repository.MenuRepository;
@@ -11,6 +12,8 @@ import com.QRMenu.menu.repository.MenusCategoryRepository;
 import com.QRMenu.menu.service.MenusCategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -37,5 +40,10 @@ public class MenusCategoryServiceImpl implements MenusCategoryService {
     @Override
     public void deleteCategory(Integer menuId, Integer categoryId) {
         repository.deleteByMenuIdAndCategoryId(menuId, categoryId);
+    }
+
+    @Override
+    public List<MenusCategoryDto> getCategoriesByMenu(Integer menuId) {
+        return MenusCategoryMapper.convertList(repository.findByMenuId(menuId));
     }
 }

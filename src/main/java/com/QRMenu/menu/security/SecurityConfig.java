@@ -32,6 +32,7 @@ public class SecurityConfig {
                         req.requestMatchers("/auth/**").permitAll()
                                 .requestMatchers("/admin/**").hasAuthority("USER")
                                 .requestMatchers("/homepage/**").permitAll()
+                                .requestMatchers("/menu/get-active-menu").permitAll()
                                 .requestMatchers("/images/**").permitAll()
                                 .anyRequest().authenticated()
                 )

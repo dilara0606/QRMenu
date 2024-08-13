@@ -7,6 +7,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
@@ -26,4 +27,7 @@ public class Menu {
 
     boolean isActive;
     String imageUrl;
+
+    @OneToMany(mappedBy = "menu", fetch = FetchType.EAGER)
+    private List<MenusCategory> menusCategoryList;
 }

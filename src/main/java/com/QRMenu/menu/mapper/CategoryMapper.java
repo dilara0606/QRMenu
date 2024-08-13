@@ -23,6 +23,7 @@ public class CategoryMapper {
                 .imageUrl(mediaUrl)
                 .createdAt(category.getCreatedAt())
                 .updatedAt(category.getUpdatedAt())
+                .categoriesItemDtoList(CategoriesItemMapper.convertListWithoutCategoryDto(category.getCategoriesItemList()))
                 .build();
     }
 

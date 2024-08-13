@@ -23,6 +23,7 @@ public class MenuMapper {
                 .isActive(menu.isActive())
                 .createdAt(menu.getCreatedAt())
                 .updatedAt(menu.getUpdatedAt())
+                .menusCategoryDtoList(MenusCategoryMapper.convertListWithoutMenuDto(menu.getMenusCategoryList()))
                 .build();
     }
 

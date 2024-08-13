@@ -16,10 +16,25 @@ public class MenusCategoryMapper {
                 .build();
     }
 
+    public static MenusCategoryDto convertWithoutMenuDto(MenusCategory menusCategory) {
+
+        return MenusCategoryDto.builder()
+                .categoryDto(CategoryMapper.convert(menusCategory.getCategory()))
+                .build();
+    }
+
     public static List<MenusCategoryDto> convertList(List<MenusCategory> menusCategories) {
         List<MenusCategoryDto> menusCategoryDtoList = new ArrayList<>();
         for (MenusCategory menusCategory : menusCategories) {
             menusCategoryDtoList.add(convert(menusCategory));
+        }
+        return menusCategoryDtoList;
+    }
+
+    public static List<MenusCategoryDto> convertListWithoutMenuDto(List<MenusCategory> menusCategories) {
+        List<MenusCategoryDto> menusCategoryDtoList = new ArrayList<>();
+        for (MenusCategory menusCategory : menusCategories) {
+            menusCategoryDtoList.add(convertWithoutMenuDto(menusCategory));
         }
         return menusCategoryDtoList;
     }

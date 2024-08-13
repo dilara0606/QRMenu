@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface MenuService {
 
-    void saveMenu(Menu menu);
+    MenuDto saveMenu(Menu menu);
 
     MenuDto activateMenu(Integer id);
 

@@ -6,6 +6,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Data
@@ -22,4 +23,7 @@ public class Category {
     LocalDate createdAt;
     @LastModifiedDate
     LocalDate updatedAt;
+
+    @OneToMany(mappedBy = "category", fetch = FetchType.EAGER)
+    private List<CategoriesItem> categoriesItemList;
 }

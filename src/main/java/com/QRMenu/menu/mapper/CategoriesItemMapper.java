@@ -17,10 +17,25 @@ public class CategoriesItemMapper {
                 .build();
     }
 
+    public static CategoriesItemDto convertWithoutCategoryDto(CategoriesItem categoriesItem) {
+
+        return CategoriesItemDto.builder()
+                .itemDto(ItemMapper.convert(categoriesItem.getItem()))
+                .build();
+    }
+
     public static List<CategoriesItemDto> convertList(List<CategoriesItem> categoriesItemList) {
         List<CategoriesItemDto> categoriesItemDtoList = new ArrayList<>();
         for (CategoriesItem categoriesItem : categoriesItemList) {
             categoriesItemDtoList.add(convert(categoriesItem));
+        }
+        return categoriesItemDtoList;
+    }
+
+    public static List<CategoriesItemDto> convertListWithoutCategoryDto(List<CategoriesItem> categoriesItemList) {
+        List<CategoriesItemDto> categoriesItemDtoList = new ArrayList<>();
+        for (CategoriesItem categoriesItem : categoriesItemList) {
+            categoriesItemDtoList.add(convertWithoutCategoryDto(categoriesItem));
         }
         return categoriesItemDtoList;
     }
