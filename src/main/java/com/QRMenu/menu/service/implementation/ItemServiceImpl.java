@@ -5,6 +5,7 @@ import com.QRMenu.menu.dto.ItemDto;
 import com.QRMenu.menu.entity.Category;
 import com.QRMenu.menu.entity.Item;
 import com.QRMenu.menu.entity.User;
+import com.QRMenu.menu.filter.ItemFilter;
 import com.QRMenu.menu.mapper.CategoryMapper;
 import com.QRMenu.menu.mapper.ItemMapper;
 import com.QRMenu.menu.repository.CategoryRepository;
@@ -13,6 +14,7 @@ import com.QRMenu.menu.repository.ItemRepository;
 import com.QRMenu.menu.repository.UserRepository;
 import com.QRMenu.menu.security.JwtService;
 import com.QRMenu.menu.service.ItemService;
+import com.QRMenu.menu.specification.ItemSpecification;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -165,5 +167,10 @@ public class ItemServiceImpl implements ItemService {
         User user = userRepository.findByemail(email);
 
         return ItemMapper.convertList(repository.findAll());
+    }
+
+    @Override
+    public List<ItemDto> searchItem(ItemFilter itemFilter) {
+        return ItemMapper.convertList(repository.findAll(ItemSpecification.searchItem(itemFilter)));
     }
 }

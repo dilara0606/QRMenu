@@ -2,6 +2,7 @@ package com.QRMenu.menu.controller;
 
 import com.QRMenu.menu.dto.ItemDto;
 import com.QRMenu.menu.entity.Item;
+import com.QRMenu.menu.filter.ItemFilter;
 import com.QRMenu.menu.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -37,4 +38,10 @@ public class ItemController {
     public List<ItemDto> getAllItem(@RequestHeader(name = "Authorization") String token) {
         return service.getAll(token);
     }
+
+    @PostMapping("/search-item")
+    public List<ItemDto> searchUser(@RequestBody ItemFilter itemFilter){
+        return service.searchItem(itemFilter);
+    }
+
 }
