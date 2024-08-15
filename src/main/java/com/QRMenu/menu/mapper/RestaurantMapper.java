@@ -17,6 +17,7 @@ public class RestaurantMapper {
         String mediaUrl = convertToLocalUrl(mediaPath);
 
         return RestaurantDto.builder()
+                .id(restaurant.getId())
                 .name(restaurant.getName())
                 .address(restaurant.getAddress())
                 .email(restaurant.getEmail())

@@ -18,4 +18,8 @@ public interface MenusCategoryRepository extends JpaRepository<MenusCategory, In
     void deleteByMenuIdAndCategoryId(Integer menuId, Integer categoryId);
 
     List<MenusCategory> findByMenuId(Integer menuId);
+
+    void deleteByCategoryId(Integer id);
+
+    void deleteByMenuId(Integer id);
 }

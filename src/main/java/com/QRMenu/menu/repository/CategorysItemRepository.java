@@ -22,4 +22,6 @@ public interface CategorysItemRepository extends JpaRepository<CategoriesItem, I
     List<CategoriesItem> findByItemId(Integer itemId);
 
     void deleteByItemId(Integer id);
+
+    void deleteByCategoryId(Integer id);
 }

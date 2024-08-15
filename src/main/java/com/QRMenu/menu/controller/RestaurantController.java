@@ -25,4 +25,9 @@ public class RestaurantController {
         return service.editRestaurant(id, restaurant);
     }
 
+    @PostMapping("create-restaurant")
+    public RestaurantDto createRestaurant(@RequestBody Restaurant restaurant){
+        return service.createRestaurant(restaurant);
+    }
+
 }

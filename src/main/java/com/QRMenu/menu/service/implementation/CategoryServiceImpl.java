@@ -4,6 +4,8 @@ import com.QRMenu.menu.dto.CategoryDto;
 import com.QRMenu.menu.entity.Category;
 import com.QRMenu.menu.mapper.CategoryMapper;
 import com.QRMenu.menu.repository.CategoryRepository;
+import com.QRMenu.menu.repository.CategorysItemRepository;
+import com.QRMenu.menu.repository.MenusCategoryRepository;
 import com.QRMenu.menu.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,6 +27,8 @@ public class CategoryServiceImpl implements CategoryService {
     @Value("${server.upload.directory}")
     private String uploadDir;
     private final CategoryRepository categoryRepository;
+    private final MenusCategoryRepository menusCategoryRepository;
+    private final CategorysItemRepository categorysItemRepository;
 
     @Override
     public CategoryDto saveCategory(Category category) {
@@ -82,6 +86,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void deleteCategory(Integer id) {
+        menusCategoryRepository.deleteByCategoryId(id);
+        categorysItemRepository.deleteByCategoryId(id);
         categoryRepository.deleteById(id);
     }
 

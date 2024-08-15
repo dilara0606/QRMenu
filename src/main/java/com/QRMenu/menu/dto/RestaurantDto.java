@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class RestaurantDto {
 
+    Integer id;
     String name;
     String address;
     String phone;

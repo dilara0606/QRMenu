@@ -97,4 +97,17 @@ public class GlobalExceptionHandler {
                                 .build()
                 );
     }
+
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<ExceptionResponse> handlerException(IllegalStateException exp){
+        return ResponseEntity
+                .status(BAD_REQUEST)
+                .body(
+                        ExceptionResponse.builder()
+                                .businessExceptionDescription("Cannot delete an active menu")
+                                .error(exp.getMessage())
+                                .build()
+                );
+    }
+
 }

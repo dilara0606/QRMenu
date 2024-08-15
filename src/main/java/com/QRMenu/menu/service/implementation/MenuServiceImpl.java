@@ -12,6 +12,7 @@ import com.QRMenu.menu.repository.MenuRepository;
 import com.QRMenu.menu.repository.MenusCategoryRepository;
 import com.QRMenu.menu.service.MenuService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,7 @@ public class MenuServiceImpl implements MenuService {
     @Value("${server.upload.directory}")
     private String uploadDir;
     private final MenuRepository repository;
+    private final MenusCategoryRepository menusCategoryRepository;
 
     @Override
     public MenuDto saveMenu(Menu menu) {
@@ -113,9 +115,17 @@ public class MenuServiceImpl implements MenuService {
         return MenuMapper.convert(menu);
     }
 
+    @Transactional
     @Override
     public void deleteMenu(Integer id) {
-       repository.deleteById(id);
+        Menu menu = repository.findByid(id);
+
+        if (menu != null && !menu.isActive()) {
+            menusCategoryRepository.deleteByMenuId(id);
+            repository.deleteById(id);
+        } else {
+            throw new IllegalStateException("Cannot delete an active menu");
+        }
     }
 
     @Override

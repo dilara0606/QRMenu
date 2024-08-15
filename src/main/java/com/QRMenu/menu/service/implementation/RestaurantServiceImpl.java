@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URL;
 import java.util.Base64;
 import java.util.List;
 
@@ -55,11 +57,35 @@ public class RestaurantServiceImpl implements RestaurantService {
         oldRestaurant.setPhone(restaurant.getPhone());
         oldRestaurant.setEmail(restaurant.getEmail());
 
-        return RestaurantMapper.convert(oldRestaurant);
+        return RestaurantMapper.convert(repository.save(oldRestaurant));
     }
 
     @Override
     public RestaurantDto createRestaurant(Restaurant restaurant) {
+
+        String imageUrl = restaurant.getImageUrl();
+
+        if (imageUrl != null) {
+            if (imageUrl.startsWith("data:image/")) {
+                // Base64 formatındaki resmi işleme
+                String[] parts = imageUrl.split(",");
+                String imageString = parts.length > 1 ? parts[1] : ""; // Check if parts array has at least 2 elements
+
+                String fileName = "restaurant_image_" + System.currentTimeMillis() + ".jpg";
+                String filePath = uploadDir + "/" + fileName;
+
+                try (OutputStream outputStream = new FileOutputStream(filePath)) {
+                    byte[] imageBytes = Base64.getDecoder().decode(imageString);
+                    outputStream.write(imageBytes);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                restaurant.setImageUrl(filePath);
+            } else {
+                restaurant.setImageUrl(imageUrl);
+            }
+        }
+
         return RestaurantMapper.convert(repository.save(restaurant));
     }
 }
