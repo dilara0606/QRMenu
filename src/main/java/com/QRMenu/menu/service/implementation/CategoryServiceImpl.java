@@ -76,7 +76,7 @@ public class CategoryServiceImpl implements CategoryService {
         }
 
         categoryRepository.save(category);
-        return CategoryMapper.convert(category);
+        return CategoryMapper.convertWithoutCategoriesItem(category);
     }
 
     @Override

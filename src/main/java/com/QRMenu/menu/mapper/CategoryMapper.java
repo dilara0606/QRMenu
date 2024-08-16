@@ -27,6 +27,20 @@ public class CategoryMapper {
                 .build();
     }
 
+    public static CategoryDto convertWithoutCategoriesItem(Category category)
+    {
+        String mediaPath = category.getImageUrl();
+        String mediaUrl = convertToLocalUrl(mediaPath);
+
+        return CategoryDto.builder()
+                .id(category.getId())
+                .name(category.getName())
+                .imageUrl(mediaUrl)
+                .createdAt(category.getCreatedAt())
+                .updatedAt(category.getUpdatedAt())
+                .build();
+    }
+
     private static String convertToLocalUrl(String mediaPath) {
         Path imagePath = Paths.get(mediaPath);
         Path desktopPath = Paths.get("C:/Users/Dilara/Desktop");
