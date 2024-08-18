@@ -1,8 +1,10 @@
 package com.QRMenu.menu.controller;
 
 import com.QRMenu.menu.dto.MenuDto;
+import com.QRMenu.menu.dto.RestaurantDto;
 import com.QRMenu.menu.entity.Menu;
 import com.QRMenu.menu.service.MenuService;
+import com.QRMenu.menu.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +17,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class QRMenuController {
 
-    private final MenuService service;
+    private final MenuService menuService;
+    private final RestaurantService restaurantService;
 
     @GetMapping("get-active-menu")
     public MenuDto getActiveMenu() {
-        return service.getActiveMenu();
+        return menuService.getActiveMenu();
+    }
+
+    @GetMapping("get-restaurant-info")
+    public List<RestaurantDto> getRestaurantInfo() {
+        return restaurantService.getRestaurantInfo();
     }
 }

@@ -38,9 +38,9 @@ public class AuthenticationController {
     }
 
     @PostMapping("/forgot-password")
-    public ResponseEntity<?> forgotPassword(@RequestBody @Valid ForgotPasswordRequest request) throws MessagingException {
-        authenticationService.forgotPassword(request);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<String> forgotPassword(@RequestBody @Valid ForgotPasswordRequest request) throws MessagingException {
+        String newToken = authenticationService.forgotPassword(request);
+        return ResponseEntity.ok(newToken);
     }
 
     @PostMapping("/reset-password-with-token")

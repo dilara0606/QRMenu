@@ -127,7 +127,7 @@ public class AuthenticationService {
 
     }
 
-    public void forgotPassword(ForgotPasswordRequest request) throws MessagingException {
+    public String forgotPassword(ForgotPasswordRequest request) throws MessagingException {
         var user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
@@ -142,6 +142,7 @@ public class AuthenticationService {
                 newToken,
                 "Password Reset Request"
         );
+        return newToken;
     }
 
     private String generateAndSaveResetPasswordToken(User user) {

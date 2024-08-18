@@ -33,6 +33,7 @@ public class SecurityConfig {
                                 .requestMatchers("/admin/**").hasAuthority("USER")
                                 .requestMatchers("/homepage/**").permitAll()
                                 .requestMatchers("/menu/get-active-menu").permitAll()
+                                .requestMatchers("/menu/get-restaurant-info").permitAll()
                                 .requestMatchers("/images/**").permitAll()
                                 .anyRequest().authenticated()
                 )
